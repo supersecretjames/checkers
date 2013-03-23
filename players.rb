@@ -2,10 +2,11 @@ require './checkers'
 require './board'
 
 class Player
-	attr_reader :name
+	attr_reader :name, :color
 
-	def initialize(name)
+	def initialize(name, color)
 		@name = name
+    @color = color
 	end
 
 end
@@ -14,7 +15,7 @@ class HumanPlayer < Player
 
 	def make_move(board) # Returns array with start and finish coordinates.
 		move = get_move(board)
-		if board.valid_move?(move) 
+		if board.valid_move?(move, self.color)
 			return move
 		else
 			puts "Sorry, invalid move. Please try again."
@@ -22,9 +23,9 @@ class HumanPlayer < Player
 		end
 	end
 
-	def get_move(board) 
-		puts 'Please pick a piece (row, column) to move ("0, 1" for example).'
-		from_pos = gets.chomp 
+	def get_move(board)
+		puts "#{self.name}, please pick a #{self.color} piece (row, column) to move ('0, 1' for example)."
+		from_pos = gets.chomp
 		from_pos = [from_pos[0].to_i, from_pos[-1].to_i]
 
 
