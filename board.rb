@@ -10,22 +10,22 @@ class Board
 	end
 
 	def self.set_board
-		@board = Array.new(8) {Array.new(8)}
+		@board = Array.new(8) {Array.new(8)} #REV: mmm, clean
 
 		@board.each_with_index do |row, row_index|
 			row.each_with_index do |column, column_index|
 				if (row_index == 0 || row_index == 2) && column_index.odd?
-					@board[row_index][column_index] = Peon.new(:red)
+					@board[row_index][column_index] = Peon.new(:red) #REV: haha, 'Peon'
 				elsif row_index == 1 && column_index.even?
 					@board[row_index][column_index] = Peon.new(:red)
 				elsif (row_index == 5 || row_index == 7) && column_index.even?
 					@board[row_index][column_index] = Peon.new(:white)
-				elsif row_index == 6 && column_index.odd?
+				elsif row_index == 6 && column_index.odd? #REV: I wish I had thought of 'Peon'
 					@board[row_index][column_index] = Peon.new(:white)
 				end
-			end
-		end
-		@board
+			end #REV: I personally prefer hardcoding something like
+		end #REV: this, seem the starting positions are sort of arbitrary
+		@board #REV: anyway
 	end
 
 	def valid_move?(move, player_color)
@@ -46,9 +46,9 @@ class Board
 	end
 
   def valid_dests(start_pos, player_color) # TODO Refactor DRY DRY DRY
-    start_r, start_c = start_pos[0], start_pos[1]
-    start = board[start_r][start_c]
-    dest = []
+    start_r, start_c = start_pos[0], start_pos[1] #REV: I sing that
+    start = board[start_r][start_c] #REV: to myself after I get out
+    dest = [] #REV: of the shower everyday
     #empty? method
     if (start.class == Peon && start.color == :red) || start.class == King
       if board[start_r + 1][start_c - 1].nil?
@@ -117,8 +117,8 @@ class Board
         white += 1 if item.color == :white
       end
     end
-    if red == 0 or white == 0
-      puts "Game over!"
+    if red == 0 or white == 0 #REV: doesn't really need to be
+      puts "Game over!" #REV: counted, right?
       return true
     else
       return false
@@ -128,7 +128,7 @@ class Board
   def king_promote
     @board[0].each_with_index do |square, index|
       if (square.class == Peon && square.color == :white)
-        puts "White has a king!"
+        puts "White has a king!" #REV: epic
         @board[0][index] = King.new(:white)
       end
     end
